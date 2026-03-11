@@ -19,10 +19,13 @@ class AgentService:
 
     def _create_agent(self, thread_id: uuid.UUID = None):
         """LangChain 에이전트 생성"""
-        # IMP: DeepAgents 라이브러리를 사용하여 LangGraph 기반의 에이전트를 생성하는 구현. 
+        # IMP: DeepAgents 라이브러리를 사용하여 LangGraph 기반의 에이전트를 생성하는 구현.
         # LLM 모델, 사용할 도구(Tools), 시스템 프롬프트, 상태 저장소(Checkpointer), 그리고 응답 포맷(ToolStrategy)을 결합하여 워크플로우를 초기화합니다.
-        # Agent 생성
-        from app.agents.dummy import Agent
+        # Agent 생성 (MemorySaver 유지를 위해 최초 1회만 생성)
+        if self.agent is not None:
+            return
+        # from app.agents.dummy import Agent
+        from app.agents.stock_agent import Agent
         self.agent = Agent()
 
     # 실제 대화 로직
